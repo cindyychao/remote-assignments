@@ -1,0 +1,117 @@
+/* base element style */
+
+* {
+   box-sizing: border-box;
+}
+
+body {
+  font-family: 'Times New Roman', Times;
+  line-height: 1.6;
+  color: #3a3a3a;
+  margin: 0;
+}
+ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+p{
+  font-size: 0.95em;
+  margin: 0 0 1em 0;
+}
+h2,
+h3,
+a {
+  color: #093a58;
+}
+h2,
+h3 {
+  margin: 0 0 0.8em 0;
+}
+a {
+  text-decoration: none;
+}
+
+/* base layout styles */
+
+/* navigation */
+.name {
+  font-size: 1.35em;
+  margin: 0;
+}
+.main-nav a {
+  margin-top: 5px;
+}
+.name a,
+.main-nav a,
+h2 {
+  text-align: center;
+  display: block;
+  padding: 10px 15px;
+}
+.main-nav a {
+  font-size: 0.95em;
+  color: blue;
+  text-transform: uppercase;
+}
+.main-nav a:hover {
+  color: lightskyblue;
+}
+.arrow:hover {
+   color: MediumPurple;
+}
+
+/* layout containers */
+
+.main-header {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+.banner {
+  text-align: center;
+  color: #093a58;
+  background: #B0E0E6;
+  padding: 3.2em 0;
+  margin-bottom: 48px;
+}
+.col {
+  padding: 1em; 
+  background: #c1e3f1;
+  border-radius: 0.35em;
+  margin: 0 0.5em 0.8em;
+}
+/* page elements*/
+
+.headline {
+  margin-bottom: 0;
+}
+.button {
+  color: #fff;
+  text-align: center;
+  padding: 0.625em 1.25em;
+  background: darkgray;
+  border-radius: 0.35em;
+}
+
+/* media queries*/
+
+@media (min-width: 769px) {
+  .main-header,
+  .row {
+      width: 90%;
+      margin: 0 auto;
+  }
+  .tagline {
+      font-size: 1.4em;
+  }
+}
+@media (min-width: 1025px){
+
+   .main-header,
+   .row {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+   }
+
+} 
