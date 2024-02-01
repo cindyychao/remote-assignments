@@ -66,7 +66,8 @@ public class DemoApplication {
 		cookie.setMaxAge(24 * 60 * 60); // set cookie expiration time in seconds to max 24 hours
 		response.addCookie(cookie);
 
-		return ResponseEntity.ok("Your Name: " + name);
+		// Redirect to /myName
+		return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, "/myName").body(null);
 	}
 
 	private int calculateSum(int n) {
