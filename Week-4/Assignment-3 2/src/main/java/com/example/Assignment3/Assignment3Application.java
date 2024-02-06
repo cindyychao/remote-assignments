@@ -1,7 +1,7 @@
-package com.example.Assignment3;
+package com.example.assignment3;
 
-import com.example.Assignment3.entity.User;
-import com.example.Assignment3.repository.UserRepository;
+import com.example.assignment3.entity.User;
+import com.example.assignment3.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,11 +19,17 @@ public class Assignment3Application {
 
 	@GetMapping("/")
 	public String home() {
-		return "home"; // Return the name of the HTML view for the home page
+		return "home.html"; // Return the name of the HTML view for the home page
 	}
 
 	@PostMapping("/signup")
 	public RedirectView signUp(@RequestParam String email, @RequestParam String password, RedirectAttributes attributes) {
+		// Validate email format
+		if (!isValidEmail(email)) {
+			attributes.addFlashAttribute("signupError", "Invalid email format");
+			return new RedirectView("/");
+		}
+
 		// Check if the email is already registered
 		if (userRepository.existsByEmail(email)) {
 			attributes.addFlashAttribute("signupError", "Email is already registered");
@@ -41,6 +47,12 @@ public class Assignment3Application {
 
 	@PostMapping("/signin")
 	public RedirectView signIn(@RequestParam String email, @RequestParam String password, RedirectAttributes attributes) {
+		// Validate email format
+		if (!isValidEmail(email)) {
+			attributes.addFlashAttribute("signinError", "Invalid email format");
+			return new RedirectView("/");
+		}
+
 		// Find user by email and password
 		User user = userRepository.findByEmailAndPassword(email, password); // Use the correct User class
 		if (user == null) {
@@ -48,6 +60,13 @@ public class Assignment3Application {
 			return new RedirectView("/");
 		}
 		return new RedirectView("member.html");
+	}
+
+	// Utility method to validate email format
+	private boolean isValidEmail(String email) {
+		// You can implement your own email validation logic here
+		// For simplicity, this example checks if the email contains "@" and "."
+		return email != null && email.contains("@") && email.contains(".");
 	}
 
 	public static void main(String[] args) {
