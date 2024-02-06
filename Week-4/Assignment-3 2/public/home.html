@@ -6,35 +6,37 @@
     <script>
         // JavaScript function to display error message
         function displayErrorMessage(elementId, errorMessage) {
-            var element = document.getElementById(elementId);
+            const element = document.getElementById(elementId);
             if (errorMessage) {
                 element.style.color = "red";
                 element.innerText = errorMessage;
+                return false; // Prevent form submission
             } else {
                 element.innerText = "";
+                return true; // Allow form submission
             }
         }
     </script>
 </head>
 <body>
-    <h1>Home Page</h1>
+<h1>Home Page</h1>
 
-    <!-- Display sign-up error message if exists -->
-    <p id="signupErrorMessage"></p>
+<!-- Display sign-up error message if exists -->
+<p id="signupErrorMessage"></p>
 
-    <form action="/signup" method="post" onsubmit="displayErrorMessage('signupErrorMessage', '')">
-        <input type="text" name="email" placeholder="Email" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <button type="submit" onclick="displayErrorMessage('signupErrorMessage', 'Invalid email format')">Sign Up</button>
-    </form>
+<form action="/signup" method="post" onsubmit="return displayErrorMessage('signupErrorMessage', this.getAttribute('data-error'))">
+    <input type="text" name="email" placeholder="Email" required><br>
+    <input type="password" name="password" placeholder="Password" required><br>
+    <button type="submit" onclick="this.form.setAttribute('data-error', '');">Sign Up</button>
+</form>
 
-    <!-- Display sign-in error message if exists -->
-    <p id="signinErrorMessage"></p>
+<!-- Display sign-in error message if exists -->
+<p id="signinErrorMessage"></p>
 
-    <form action="/signin" method="post" onsubmit="displayErrorMessage('signinErrorMessage', '')">
-        <input type="text" name="email" placeholder="Email" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <button type="submit" onclick="displayErrorMessage('signinErrorMessage', 'Invalid email or password')">Sign In</button>
-    </form>
+<form action="/signin" method="post" onsubmit="return displayErrorMessage('signinErrorMessage', this.getAttribute('data-error'))">
+    <input type="text" name="email" placeholder="Email" required><br>
+    <input type="password" name="password" placeholder="Password" required><br>
+    <button type="submit" onclick="this.form.setAttribute('data-error', '');">Sign In</button>
+</form>
 </body>
 </html>
