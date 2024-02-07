@@ -18,9 +18,9 @@ public class Assignment3Application {
 	@Autowired
 	private UserRepository userRepository;
 
-	@GetMapping("/index")
+	@GetMapping("/home")
 	public String index() {
-		return "index";
+		return "home";
 	}
 
 	@GetMapping("/member")
@@ -32,7 +32,7 @@ public class Assignment3Application {
 	public String signUp(@RequestParam String email, @RequestParam String password, Model model) {
 		if (userRepository.existsByEmail(email)) {
 			model.addAttribute("signupError", "Email is already registered");
-			return "redirect:/home"; // Redirect to the sign-up page
+			return "home"; // Redirect to the sign-up page
 		}
 		// Create a new user
 		User user = new User();
@@ -47,7 +47,7 @@ public class Assignment3Application {
 		User user = userRepository.findByEmailAndPassword(email, password);
 		if (user == null) {
 			model.addAttribute("signinError", "Invalid email or password");
-			return "redirect:/home"; // Redirect to the sign-in page
+			return "home"; // Redirect to the sign-in page
 		}
 		return "redirect:/member"; // Redirect to the member page
 	}
