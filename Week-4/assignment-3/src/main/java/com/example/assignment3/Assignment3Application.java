@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @SpringBootApplication
@@ -27,30 +28,29 @@ public class Assignment3Application {
 		return "member";
 	}
 
-	@GetMapping("/home")
-	public String error(@RequestParam String email, @RequestParam String password, Model model) {
-		User user = userRepository.findByEmailAndPassword(email, password); // Use the correct User class
-		// Check if the email is already registered
+	@PostMapping("/signup")
+	public String signUp(@RequestParam String email, @RequestParam String password, Model model) {
 		if (userRepository.existsByEmail(email)) {
 			model.addAttribute("signupError", "Email is already registered");
-			return "home";
-		} else if (user == null) {
-			model.addAttribute("signinError", "Invalid");
-			return "home";
+			return "home"; // Redirect to the sign-up page
 		}
-		return "home"; // Redirect to the root path
+		// Create a new user
+		User user = new User();
+		user.setEmail(email);
+		user.setPassword(password);
+		userRepository.save(user);
+		return "member"; // Redirect to the member page
 	}
 
-
-//		// Create a new user
-//		User user = new User(); // Use the correct User class
-//		user.setEmail(email);
-//		user.setPassword(password);
-//		userRepository.save(user);
-//		model.addAttribute("Success", "Success");
-//		return "member";
-//	}
-
+	@PostMapping("/signin")
+	public String signIn(@RequestParam String email, @RequestParam String password, Model model) {
+		User user = userRepository.findByEmailAndPassword(email, password);
+		if (user == null) {
+			model.addAttribute("signinError", "Invalid email or password");
+			return "home"; // Redirect to the sign-in page
+		}
+		return "member"; // Redirect to the member page
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(Assignment3Application.class, args);
