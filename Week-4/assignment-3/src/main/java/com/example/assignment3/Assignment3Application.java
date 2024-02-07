@@ -32,14 +32,14 @@ public class Assignment3Application {
 	public String signUp(@RequestParam String email, @RequestParam String password, Model model) {
 		if (userRepository.existsByEmail(email)) {
 			model.addAttribute("signupError", "Email is already registered");
-			return "home"; // Redirect to the sign-up page
+			return "redirect:/home"; // Redirect to the sign-up page
 		}
 		// Create a new user
 		User user = new User();
 		user.setEmail(email);
 		user.setPassword(password);
 		userRepository.save(user);
-		return "member"; // Redirect to the member page
+		return "redirect:/member"; // Redirect to the member page
 	}
 
 	@PostMapping("/signin")
@@ -47,9 +47,9 @@ public class Assignment3Application {
 		User user = userRepository.findByEmailAndPassword(email, password);
 		if (user == null) {
 			model.addAttribute("signinError", "Invalid email or password");
-			return "home"; // Redirect to the sign-in page
+			return "redirect:/home"; // Redirect to the sign-in page
 		}
-		return "member"; // Redirect to the member page
+		return "redirect:/member"; // Redirect to the member page
 	}
 
 	public static void main(String[] args) {
